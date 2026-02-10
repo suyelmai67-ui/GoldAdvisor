@@ -55,7 +55,17 @@ st.markdown("""
 # --- 3. CẤU HÌNH API KEY ---
 # ==========================================
 # ⚠️⚠️⚠️ DÁN KEY THẬT CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
-RAW_KEY = "AIzaSyDqj-Zm6aBp5mY6kcYAE6CiAvDTx5bhNAM"
+# --- CẤU HÌNH API KEY (BẢO MẬT) ---
+# Thay vì dán Key trực tiếp, ta bảo code đi tìm trong "Két sắt" của Server
+try:
+    # Lấy key từ secrets (biến môi trường)
+    MY_API_KEY = st.secrets["GOOGLE_API_KEY"]
+except:
+    # Nếu chạy trên máy tính cá nhân thì dùng key dự phòng (hoặc báo lỗi)
+    st.error("Chưa cấu hình API Key trên Server!")
+    st.stop()
+
+genai.configure(api_key=MY_API_KEY)
 # ==========================================
 MY_API_KEY = RAW_KEY.strip()
 try:
