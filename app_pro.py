@@ -55,15 +55,15 @@ st.markdown("""
 # --- 3. CẤU HÌNH API KEY ---
 # ==========================================
 # ⚠️⚠️⚠️ DÁN KEY THẬT CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
-# --- CẤU HÌNH API KEY (BẢO MẬT) ---
-# Thay vì dán Key trực tiếp, ta bảo code đi tìm trong "Két sắt" của Server
+# --- CẤU HÌNH API KEY AN TOÀN ---
+import os
 try:
-    # Lấy key từ secrets (biến môi trường)
+    # Lấy key từ "Két sắt" (Secrets) của Streamlit
     MY_API_KEY = st.secrets["GOOGLE_API_KEY"]
 except:
-    # Nếu chạy trên máy tính cá nhân thì dùng key dự phòng (hoặc báo lỗi)
-    st.error("Chưa cấu hình API Key trên Server!")
-    st.stop()
+    # Nếu chạy trên máy tính cá nhân (không có Secrets)
+    # Bạn có thể dán tạm key vào đây ĐỂ TEST, NHƯNG ĐỪNG UP LÊN GITHUB
+    MY_API_KEY = "DÁN_KEY_MỚI_VÀO_ĐÂY_CHỈ_KHI_CHẠY_Ở_MÁY_NHÀ"
 
 genai.configure(api_key=MY_API_KEY)
 # ==========================================
