@@ -1,11 +1,7 @@
 streamlit
 pandas
 google-generativeai
-feedparser
 requests
-<<<<<<< HEAD
-lxml
-=======
-lxml
 beautifulsoup4
->>>>>>> 31cc32bbac0218d6c5901aea1223eb01c520a16e
+lxml
+feedparser
