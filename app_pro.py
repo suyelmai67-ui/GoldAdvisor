@@ -52,29 +52,22 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. CẤU HÌNH API KEY ---
-# ==========================================
-# ⚠️⚠️⚠️ DÁN KEY THẬT CỦA BẠN VÀO DÒNG DƯỚI ĐÂY
-# --- CẤU HÌNH API KEY AN TOÀN ---
-import os
+# --- 3. CẤU HÌNH API KEY (ĐÃ SỬA LỖI) ---
+# ============================================================
 try:
-    # Lấy key từ "Két sắt" (Secrets) của Streamlit
+    # 1. Ưu tiên lấy từ "Két sắt" (Khi chạy trên Streamlit Cloud)
     MY_API_KEY = st.secrets["GOOGLE_API_KEY"]
 except:
-    # Nếu chạy trên máy tính cá nhân (không có Secrets)
-    # Bạn có thể dán tạm key vào đây ĐỂ TEST, NHƯNG ĐỪNG UP LÊN GITHUB
-    MY_API_KEY = "DÁN_KEY_MỚI_VÀO_ĐÂY_CHỈ_KHI_CHẠY_Ở_MÁY_NHÀ"
+    # 2. Nếu chạy trên máy tính cá nhân (Laptop)
+    # 👇👇👇 DÁN KEY THẬT CỦA BẠN VÀO DÒNG DƯỚI ĐỂ CHẠY TRÊN MÁY TÍNH 👇👇👇
+    MY_API_KEY = "AIzaSyCcNFJ5Xo88kai95ZmcR81hSQvg0U0rcHk" 
 
+# Cấu hình Google AI
 genai.configure(api_key=MY_API_KEY)
-# ==========================================
-MY_API_KEY = RAW_KEY.strip()
-try:
-    genai.configure(api_key=MY_API_KEY)
-except:
-    st.error("Lỗi API Key! Hãy kiểm tra lại key trong file app_pro.py")
+# ============================================================
+
 
 # --- 4. KHỞI TẠO BỘ NHỚ (SESSION STATE) ---
-# Đây là phần quan trọng để AI "nhớ" kết quả
 if 'ai_result' not in st.session_state:
     st.session_state['ai_result'] = ""
 if 'last_update' not in st.session_state:
@@ -163,7 +156,7 @@ with col_right:
                 model = genai.GenerativeModel('gemini-2.5-flash')
                 response = model.generate_content(prompt)
                 
-                # B4: LƯU KẾT QUẢ VÀO BỘ NHỚ (Khắc phục lỗi mất chữ)
+                # B4: LƯU KẾT QUẢ VÀO BỘ NHỚ
                 st.session_state['ai_result'] = response.text
                 st.session_state['last_update'] = time.strftime("%H:%M:%S")
                 
@@ -174,7 +167,7 @@ with col_right:
             except Exception as e:
                 st.error(f"Lỗi: {e}")
 
-    # HIỂN THỊ KẾT QUẢ TỪ BỘ NHỚ (Nằm ngoài nút bấm)
+    # HIỂN THỊ KẾT QUẢ TỪ BỘ NHỚ
     st.write(f"🕒 Cập nhật lần cuối: {st.session_state['last_update']}")
     
     if st.session_state['ai_result']:
